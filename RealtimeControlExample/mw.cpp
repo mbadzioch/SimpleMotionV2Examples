@@ -20,13 +20,16 @@ MW::~MW()
 {
     delete ui;
 }
-
+//TODO Symulator: STARTUP
 void MW::on_connect_clicked()
 {
+//    busName - COM port uzywany
+//    deviceAddress - 1 - os wzdluzna, 2 - os skretna (zakladam ze trzeba odpalic osobne watki po 1 dla kazdej osi)
+//    useHughBaudRate - na stale podac wartosc 1
     commThread.setPortDetails(ui->busName->text(),ui->deviceAddress->value(),ui->useHighBaudRate->isChecked());
     commThread.connectAndStart();
 }
-
+//TODO Symulator: FINISH
 void MW::on_disconnect_clicked()
 {
     commThread.stopAndDisconnect();
@@ -34,42 +37,42 @@ void MW::on_disconnect_clicked()
 
 void MW::on_decrement10000_clicked()
 {
-    commThread.incrementSetpoint(-10000);
+    commThread.incrementSetpoint(-11000);
 }
 
 void MW::on_decrement1000_clicked()
 {
-    commThread.incrementSetpoint(-1000);
+    commThread.incrementSetpoint(-9000);
 }
 
 void MW::on_decrement100_clicked()
 {
-    commThread.incrementSetpoint(-100);
+    commThread.incrementSetpoint(-7000);
 }
 
 void MW::on_decrement10_clicked()
 {
-    commThread.incrementSetpoint(-10);
+    commThread.incrementSetpoint(-5000);
 }
 
 void MW::on_increment10_clicked()
 {
-    commThread.incrementSetpoint(10);
+    commThread.incrementSetpoint(5000);
 }
 
 void MW::on_increment100_clicked()
 {
-    commThread.incrementSetpoint(100);
+    commThread.incrementSetpoint(7000);
 }
 
 void MW::on_increment1000_clicked()
 {
-    commThread.incrementSetpoint(1000);
+    commThread.incrementSetpoint(9000);
 }
 
 void MW::on_increment10000_clicked()
 {
-    commThread.incrementSetpoint(10000);
+    commThread.incrementSetpoint(11000);
 }
 
 void MW::on_resetLocalTrackingError_clicked()
@@ -106,7 +109,7 @@ void MW::logMessage(QString text)
 
 void MW::updateStatus(int posSetpoint, int posFeedback, int velSetpoint)
 {
-    ui->posSetpoint->display(posSetpoint);
+//    ui->posSetpoint->display(posSetpoint);
     ui->velocitySetpoint->display(velSetpoint);
     ui->measuredPosition->display(posFeedback);
 }

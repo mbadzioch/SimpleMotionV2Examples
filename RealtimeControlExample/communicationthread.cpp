@@ -127,7 +127,7 @@ void CommunicationThread::run()
             emit logMessage("Tracking error cleared, position target have been set as current feedback position and velocity setpoint has been released");
             break;
         case Task::IncrementSetpoint:
-            positionSetpoint+=posSetpointIncrement;
+            positionSetpoint=posSetpointIncrement;
             posSetpointIncrement=0;
             break;
         case Task::Quit:
@@ -224,10 +224,14 @@ void CommunicationThread::DoConnectAndStart()
         bool abort=false;
 
         //check if drive is in right mode
-        if(controlMode!=CM_VELOCITY)
+        if(controlMode!=CM_TORQUE)
         {
-            emit logMessage("This demo app works only if drive is in Velocity control mode, which it's not. To use this app, configure drive to be in Velocity control mode with Granity.");
+            emit logMessage("Sterownik nie jest w trybie kontroli momentu. Przelacz uzywajac aplikacji Granity");
             abort=true;
+        }
+        else
+        {
+            emit logMessage("Urzadzenie jest poprawnie w trybie kontroli momentu obrotowego.");
         }
 
         if(!(driveStatus&STAT_SERVO_READY))
@@ -475,7 +479,8 @@ void CommunicationThread::DoUpdateCycle()
     if(trackingErrorFault)
         velocitySetpoint=0;
     else
-        velocitySetpoint=round(1000.0*(double)posTrackingError*proportionalGain/feedbackDeviceResolution);//note: we sacle output with inverse of feedbackDeviceResolution to have somewhat same gain sensitivity regardless of motor sensor
+//        velocitySetpoint=round(1000.0*(double)posTrackingError*proportionalGain);//note: we sacle output with inverse of feedbackDeviceResolution to have somewhat same gain sensitivity regardless of motor sensor
+        velocitySetpoint= positionSetpoint;
 
     if(clearDriveErrorsFlag)
     {
@@ -485,6 +490,8 @@ void CommunicationThread::DoUpdateCycle()
     }
     else
         writeData.ALT1_Write.CB1_ClearFaults=0;
+
+    //TODO Symulator: Nastawa momentu - wpisać wartość do zmiennej velocitySetpoint
 
     writeData.ALT1_Write.CB1_Enable=1;//write enable with fast command. without this, drive gets disabled
     writeData.ALT1_Write.CB1_BypassTrajPlanner=1;//write bypass trajectory planner with fast command
@@ -508,6 +515,8 @@ void CommunicationThread::DoUpdateCycle()
     positionFeedback=readData.ALT1_ALT2_Read.PositionFeedback;
     bool faultstop=readData.ALT1_ALT2_Read.Stat_FaultStop;//get fault stop state of drive
     bool servoready=readData.ALT1_ALT2_Read.Stat_ServoReady;//get servo ready state of drive
+
+    //TODO Symulator: Odczyt pozycji - odczytać wartosc zmiennej positionFeedback
 
     //drive just faulted, report it once
     if(faultstop==true &&  prevDriveFaultStopState==false)

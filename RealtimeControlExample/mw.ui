@@ -23,27 +23,34 @@
          <string>Connection</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
+         <item row="3" column="0">
+          <widget class="QPushButton" name="connect">
            <property name="text">
-            <string>SimpleMotion V2 adapter port name (such as COM5, or FTDI0 etc)</string>
+            <string>Connect &amp;&amp; Start control</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="busName">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>FTDI0</string>
-           </property>
-           <property name="maxLength">
-            <number>32</number>
+            <string>Port COM sterownika</string>
            </property>
           </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Target drive address</string>
+            <string>Sterowana oś: 1 - wzdłużna 2 - skrętna</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="useHighBaudRate">
+           <property name="text">
+            <string>Use high baud rate</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -60,13 +67,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QPushButton" name="connect">
-           <property name="text">
-            <string>Connect &amp;&amp; Start control</string>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="1">
           <widget class="QPushButton" name="disconnect">
            <property name="text">
@@ -74,10 +74,13 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QCheckBox" name="useHighBaudRate">
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="busName">
            <property name="text">
-            <string>Use high baud rate</string>
+            <string>COM6</string>
+           </property>
+           <property name="maxLength">
+            <number>32</number>
            </property>
           </widget>
          </item>
@@ -93,7 +96,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Control update rate</string>
+            <string>Control update rate </string>
            </property>
           </widget>
          </item>
@@ -106,20 +109,37 @@
             <number>20</number>
            </property>
            <property name="maximum">
-            <number>500</number>
+            <number>1500</number>
            </property>
            <property name="singleStep">
             <number>10</number>
            </property>
            <property name="value">
-            <number>50</number>
+            <number>500</number>
            </property>
           </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Position gain</string>
+            <string>Nieuzywany parametr</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="positionGain">
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+           <property name="value">
+            <double>10.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Nieuzywany parametr</string>
            </property>
           </widget>
          </item>
@@ -142,23 +162,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QDoubleSpinBox" name="positionGain">
-           <property name="maximum">
-            <double>9999.989999999999782</double>
-           </property>
-           <property name="value">
-            <double>10.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Position tracking error tolerance</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
@@ -175,10 +178,20 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="resetLocalTrackingError">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Reset local position tracking error</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QGroupBox" name="groupBox_5">
            <property name="title">
-            <string>Adjust position setpoint</string>
+            <string>Nastaw moment obrotowy</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
@@ -192,7 +205,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>-10000</string>
+                 <string>-11000</string>
                 </property>
                </widget>
               </item>
@@ -205,7 +218,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>-1000</string>
+                 <string>-9000</string>
                 </property>
                </widget>
               </item>
@@ -218,7 +231,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>-100</string>
+                 <string>-7000</string>
                 </property>
                </widget>
               </item>
@@ -231,7 +244,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>-10</string>
+                 <string>-5000</string>
                 </property>
                </widget>
               </item>
@@ -250,7 +263,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>+10</string>
+                 <string>+5000</string>
                 </property>
                </widget>
               </item>
@@ -263,7 +276,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>+100</string>
+                 <string>+7000</string>
                 </property>
                </widget>
               </item>
@@ -276,7 +289,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>+1000</string>
+                 <string>+9000</string>
                 </property>
                </widget>
               </item>
@@ -289,23 +302,13 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>+10000</string>
+                 <string>+11000</string>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
            </layout>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QPushButton" name="resetLocalTrackingError">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Reset local position tracking error</string>
-           </property>
           </widget>
          </item>
         </layout>
@@ -323,34 +326,10 @@
          <string>Status</string>
         </property>
         <layout class="QFormLayout" name="formLayout">
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Position setpoint</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_9">
            <property name="text">
-            <string>Measured position</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>Velocity setpoint</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLCDNumber" name="posSetpoint">
-           <property name="digitCount">
-            <number>10</number>
-           </property>
-           <property name="segmentStyle">
-            <enum>QLCDNumber::Flat</enum>
+            <string>Aktualna pozycja</string>
            </property>
           </widget>
          </item>
@@ -364,8 +343,32 @@
            </property>
           </widget>
          </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Aktualny moment</string>
+           </property>
+          </widget>
+         </item>
          <item row="3" column="1">
           <widget class="QLCDNumber" name="velocitySetpoint">
+           <property name="digitCount">
+            <number>10</number>
+           </property>
+           <property name="segmentStyle">
+            <enum>QLCDNumber::Flat</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Nastawa momentu</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLCDNumber" name="posSetpoint">
            <property name="digitCount">
             <number>10</number>
            </property>
@@ -410,17 +413,16 @@
           <widget class="QTextEdit" name="log">
            <property name="html">
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.15094pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;About this app&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;This program implements simple host side position controller over SimpleMotion bus . The program reads actual encoder position from the drive, compares it to user position setpoint, and controls drive's velocity setpoint based on the difference of the encoder vs user setpoint.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The app utilizes smFastUpdateCycle API call to lowest latency and enables highest possible control update rate over SimpleMotion. However, as this program is run on a non-real time OS, it might exhibit some inperfections in response due to control task time jitter. For best results, similar app could be make on a hard real-time system (i.e. RTOS or embedded system).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Diagram&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/real time example system diagram.png&quot; /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Prerequisities&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The app assumes that drive hsa been properly configured and drive is enabled and operating in velocity control mode.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Log:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Update rate: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Producent ograniczyl nastawe do 500Hz. Testowałem i działa do 1000Hz.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Nastawa momentu obrotowego&lt;/span&gt;:&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Dla osi wzdłużnej testować na wszystkich wartościach. Na osi skrętnej lepiej ograniczyć się do 5000 i 7000.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:700;&quot;&gt;Sterowana oś:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Prawdopodobnie dla każdej osi będzie trzeba osobny wątek komunikacji uruchomić.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:600;&quot;&gt;Log:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
