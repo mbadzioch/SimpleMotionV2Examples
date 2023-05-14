@@ -93,6 +93,7 @@ void CommunicationThread::quitApp()
 
 void CommunicationThread::run()
 {
+
     Task currentTask;
 
     while(true)
@@ -142,7 +143,9 @@ void CommunicationThread::run()
         //do servo control
         if(running)
         {
+
             DoUpdateCycle();
+
         }
 
         mutex.lock();
@@ -457,6 +460,7 @@ void CommunicationThread::DoUpdateCycle()
     FastUpdateCycleReadData readData;
     FastUpdateCycleWriteData writeData;
     int  velocitySetpoint;
+    QElapsedTimer timer;
 
     /* this app uses fast update cycle format 1 (ALT1):
     *  description: this type has 28 bits absolute setpoint and 30 bits absolute feedback value + 4 output bits for control + 2 input bits for status
@@ -499,6 +503,7 @@ void CommunicationThread::DoUpdateCycle()
     writeData.ALT1_Write.Setpoint=velocitySetpoint;//write setpoint
 
     //send the fast update cycle to drive & check errors
+    timer.start();
     if(smFastUpdateCycleWithStructs(busHandle,targetAddress,writeData, &readData)!=SM_OK)
     {
         //for clearer debug:
@@ -510,7 +515,8 @@ void CommunicationThread::DoUpdateCycle()
         stopAndDisconnect();
         emit logMessage("Aborted due to connection error.");
     }
-
+    qDebug() << "The operation took" << timer.elapsed() << "milliseconds";
+    qDebug() << "The operation took" << timer.nsecsElapsed() << "nanoseconds";
     //extract data from fastUpdateCycle command
     positionFeedback=readData.ALT1_ALT2_Read.PositionFeedback;
     bool faultstop=readData.ALT1_ALT2_Read.Stat_FaultStop;//get fault stop state of drive
